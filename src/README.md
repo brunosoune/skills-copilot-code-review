@@ -4,8 +4,10 @@ Uma aplicação FastAPI super simples que permite aos alunos visualizar e se ins
 
 ## Funcionalidades
 
-- Visualizar todas as atividades extracurriculares disponíveis
-- Inscrever-se em atividades
+- Visualizar todas as atividades extracurriculares disponiveis
+- Inscrever e remover estudantes das atividades (apenas usuarios autenticados)
+- Exibir anuncios ativos no topo da interface
+- Gerenciar anuncios (listar, criar, editar e excluir) para usuarios logados
 
 ## Como começar
 
@@ -31,6 +33,12 @@ Uma aplicação FastAPI super simples que permite aos alunos visualizar e se ins
 | ------ | ----------------------------------------------------------------- | -------------------------------------------------------------------- |
 | GET    | `/activities`                                                     | Obtém todas as atividades com detalhes e número atual de participantes |
 | POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Inscreve-se em uma atividade                                         |
+| POST   | `/activities/{activity_name}/unregister?email=student@mergington.edu` | Remove estudante de uma atividade                                 |
+| GET    | `/announcements`                                                  | Lista anuncios ativos para exibicao publica                           |
+| GET    | `/announcements/manage?teacher_username={username}`               | Lista todos os anuncios para gerenciamento (requer login)            |
+| POST   | `/announcements?teacher_username={username}`                      | Cria anuncio com mensagem e expiracao (inicio opcional)              |
+| PUT    | `/announcements/{announcement_id}?teacher_username={username}`    | Atualiza anuncio existente                                            |
+| DELETE | `/announcements/{announcement_id}?teacher_username={username}`    | Exclui anuncio                                                        |
 
 ## Modelo de Dados
 
@@ -46,4 +54,4 @@ A aplicação usa um modelo de dados simples com identificadores significativos:
    - Nome
    - Série
 
-Todos os dados são armazenados em memória, o que significa que serão resetados quando o servidor for reiniciado.
+Os dados sao armazenados no MongoDB local configurado em `src/backend/database.py`.
